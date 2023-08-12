@@ -1,16 +1,12 @@
-import axios from "axios";
-import {useContext, useState, useMemo, useEffect} from 'react'
-import {Context} from '../../../context'
-import {Button} from 'antd'
-import {SettingOutlined, 
-        UserSwitchOutlined, 
-        LoadingOutlined, 
-        WindowsFilled, 
-        SyncOutlined
-    } from '@ant-design/icons'
-import {toast} from 'react-toastify'
-import Select from 'react-select'
-import countryList from 'react-select-country-list'
+import {
+    SyncOutlined
+} from '@ant-design/icons';
+import { useContext, useMemo, useState } from 'react';
+import Select from 'react-select';
+import countryList from 'react-select-country-list';
+import { toast } from 'react-toastify';
+import apiService from "../../../config/apiService";
+import { Context } from '../../../context';
 
 // import UserRoute from '../../components/routes/UserRoute'
 
@@ -48,7 +44,7 @@ const BecomeInstructorFlutterwave= ()=>{
         
         console.log("become an instructor")
         setLoading(true)
-        axios.post('/api/make-instructor/flutterwave', data)
+        apiService.post('/make-instructor/flutterwave', data)
         .then(res=>{
           console.log(res.data)
         //  window.location.href= res.data;
@@ -73,7 +69,7 @@ const BecomeInstructorFlutterwave= ()=>{
         if(acceptedCountry.includes(ISO_CODE)){
             console.log('accepted')
             //send axios to backend for available branch in the country
-            axios.post('/api/get-banks', {ISO_CODE}).then((res)=>{
+            apiService.post('/get-banks', {ISO_CODE}).then((res)=>{
                 setBanks(res.data.Banks.data)
             }).catch((err)=>{
                 console.log(err)

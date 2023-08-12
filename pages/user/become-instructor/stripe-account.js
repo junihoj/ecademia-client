@@ -1,9 +1,9 @@
-import axios from "axios";
-import {useContext, useState} from 'react'
-import {Context} from '../../../context'
-import {Button} from 'antd'
-import {SettingOutlined, UserSwitchOutlined, LoadingOutlined, WindowsFilled} from '@ant-design/icons'
-import {toast} from 'react-toastify'
+import { LoadingOutlined, SettingOutlined, UserSwitchOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
+import { useContext, useState } from 'react';
+import { toast } from 'react-toastify';
+import apiService from "../../../config/apiService";
+import { Context } from '../../../context';
 // import UserRoute from '../../components/routes/UserRoute'
 
 const BecomeInstructorStripe= ()=>{
@@ -14,7 +14,7 @@ const BecomeInstructorStripe= ()=>{
     const becomeInstructor = ()=>{
         console.log("become an instructor")
         setLoading(true)
-        axios.post('/api/make-instructor')
+        apiService('/make-instructor')
         .then(res=>{
           Window.location.href  = res.data;
         })

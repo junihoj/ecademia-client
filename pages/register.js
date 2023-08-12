@@ -1,10 +1,10 @@
-import { useState, useContext, useEffect } from "react"
-import axios from 'axios'
-import { toast } from "react-toastify"
 import { SyncOutlined } from "@ant-design/icons"
 import Link from 'next/link'
-import { Context } from "../context"
 import { useRouter } from "next/router"
+import { useContext, useEffect, useState } from "react"
+import { toast } from "react-toastify"
+import apiService from "../config/apiService"
+import { Context } from "../context"
 
 
 const Register = ()=>{
@@ -30,8 +30,8 @@ const Register = ()=>{
            setLoading(true);
             console.table({name, email, password})
             // ${process.env.NEXT_PUBLIC_API}
-            const {data} = await axios.post(
-                `/api/register`,
+            const {data} = await apiService.post(
+                `/register`,
                 {name:name, email:email,password:password}
             );
             console.log("Register response", data);

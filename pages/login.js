@@ -1,10 +1,9 @@
-import { useState, useContext, useEffect } from "react"
-import axios from 'axios'
-import { toast } from "react-toastify"
 import { SyncOutlined } from "@ant-design/icons"
 import Link from 'next/link'
-import {Context} from '../context/index'
 import { useRouter } from "next/router"
+import { useContext, useEffect, useState } from "react"
+import apiService from "../config/apiService"
+import { Context } from '../context/index'
 
 
 const Login = ()=>{
@@ -31,8 +30,8 @@ const Login = ()=>{
            setLoading(true);
             console.table({email, password})
             // ${process.env.NEXT_PUBLIC_API}
-            const {data} = await axios.post(
-                `/api/login`,
+            const {data} = await apiService.post(
+                `/login`,
                 {email:email,password:password}
             );
             console.log("Login  response", data);

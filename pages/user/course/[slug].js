@@ -1,11 +1,11 @@
-import { useState, useEffect, createElement } from "react"
-import { useRouter } from "next/router"
-import axios from "axios"
-import StudentRoute from "../../../components/routes/StudentRoute"
-import {Button, Menu, Avatar, } from 'antd'
-import ReactPlayer from 'react-player'
-import ReactMarkdown from 'react-markdown'
 import { CheckCircleFilled, MenuFoldOutlined, MinusCircleFilled, PlayCircleOutlined } from "@ant-design/icons"
+import { Avatar, Button, Menu, } from 'antd'
+import { useRouter } from "next/router"
+import { createElement, useEffect, useState } from "react"
+import ReactMarkdown from 'react-markdown'
+import ReactPlayer from 'react-player'
+import StudentRoute from "../../../components/routes/StudentRoute"
+import apiService from "../../../config/apiService"
 
 const {Item} = Menu
 
@@ -37,7 +37,7 @@ const SingleCourse = ()=>{
 
     const loadCourse = async ()=>{
         try {
-            const {data} = await axios.get(`/api/user/course/${slug}`);
+            const {data} = await apiService.get(`/user/course/${slug}`);
             setCourse(data)
         } catch (error) {
             console.log(error)
@@ -46,7 +46,7 @@ const SingleCourse = ()=>{
     }
 
     const loadCompletedLessons =async ()=>{
-        const {data} = await axios.post(`/api/list-completed`, {
+        const {data} = await apiService.post(`/list-completed`, {
             courseId: course._id
         })
         console.log('COMPLETED LESSONS', data)
@@ -55,7 +55,7 @@ const SingleCourse = ()=>{
     }
 
     const markCompleted = async ()=>{
-        const {data} = await axios.post(`/api/mark-completed`, {
+        const {data} = await apiService.post(`/mark-completed`, {
             courseId:course._id,
             lessonId:course.lessons[clicked]._id,
         })
@@ -64,7 +64,7 @@ const SingleCourse = ()=>{
 
     const markIncompleted = async ()=>{
         try{
-            const {data} = await axios.post(`/api/mark-incomplete`, {
+            const {data} = await apiService.post(`/mark-incomplete`, {
                 courseId:course._id,
                 lessonId:course.lessons[clicked]._id,
             })

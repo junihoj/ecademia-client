@@ -1,6 +1,6 @@
-import {useEffect} from 'react';
 import { useRouter } from 'next/router';
-import axios from 'axios';
+import { useEffect } from 'react';
+import apiService from '../../config/apiService';
 const CourseEnroll = ()=>{
     const router = useRouter();
 
@@ -22,7 +22,7 @@ const CourseEnroll = ()=>{
     },[courseId])
 
     const successRequest = async ()=>{
-        const {data} =await axios.get(`/api/flw_courseenroll/${courseId}?status=${status}&tx_ref=${tx_ref}&transaction_id=${transaction_id}`);
+        const {data} =await apiService.get(`/flw_courseenroll/${courseId}?status=${status}&tx_ref=${tx_ref}&transaction_id=${transaction_id}`);
         // router.push(`user/course/${data.course.slug}`); // push to user's course view page
         console.log("response redirect", data)
         router.push(`/user/course/${data.course.slug}`);
