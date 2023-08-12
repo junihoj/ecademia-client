@@ -1,9 +1,9 @@
-import {useState, useEffect} from 'react'
-import axios from "axios";
+import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { Avatar, Tooltip } from 'antd';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import InstructorRoute from "../../components/routes/InstructorRoute";
-import {Avatar, Tooltip} from 'antd'
-import Link from 'next/link'
-import {CheckCircleOutlined, CloseCircleOutlined} from '@ant-design/icons'
+import apiService from '../../config/apiService';
 
 
 const CourseCreate= ()=>{
@@ -14,7 +14,7 @@ const CourseCreate= ()=>{
     }, [])
 
     const loadCourses = async ()=>{
-            const {data}  = await axios.get('/api/instructor-courses')
+            const {data}  = await apiService.get('/instructor-courses')
             setCourses(data)
     }
 

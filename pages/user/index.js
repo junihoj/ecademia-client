@@ -1,10 +1,10 @@
-import { useContext, useState, useEffect} from 'react'
-import {Context} from '../../context'
+import { PlayCircleOutlined, SyncOutlined } from '@ant-design/icons';
+import { Avatar } from 'antd';
+import Link from 'next/link';
+import { useContext, useEffect, useState } from 'react';
 import UserRoute from '../../components/routes/UserRoute';
-import axios from 'axios';
-import {Avatar} from 'antd'
-import Link from 'next/link'
-import { SyncOutlined, PlayCircleOutlined } from '@ant-design/icons'
+import apiService from '../../config/apiService';
+import { Context } from '../../context';
 const UserIndex = ()=>{
 
     const [courses, setCourses] = useState([])
@@ -22,7 +22,7 @@ const UserIndex = ()=>{
         try{
             setLoading(true)
             
-            const {data} = await axios.get('/api/user-courses')
+            const {data} = await apiService.get('/user-courses')
             console.log('DATA', data)
             setCourses(data)
             setLoading(false)

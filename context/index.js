@@ -1,11 +1,12 @@
 import {
-    createContext, 
-    useReducer, 
-    useEffect
-} from 'react'
+    createContext,
+    useEffect,
+    useReducer
+} from 'react';
 
-import axios from 'axios'
-import router, { useRouter } from 'next/router';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import apiService from '../config/apiService';
 
 // create initial state
 
@@ -41,15 +42,14 @@ const Provider = ({children})=>{
     },[])
 
     const router = useRouter();
- 
-    axios.interceptors.response.use((response)=>{
+    apiService.interceptors.response.use((response)=>{
         return response;
     }, (error)=>{
         const res = error.response;
         console.log('RESPONSE', res);
         if(res.status === 401 && res.config && !res.config.__isRetryRequest){
             return new Promise((resolve, reject)=>{
-                axios.get('/api/logout').then((data)=>{
+                apiService.get('/logout').then((data)=>{
                     console.log("/401 error > Logout");
                     dispatch({
                         type:'LOGOUT'
@@ -67,7 +67,7 @@ const Provider = ({children})=>{
 
     useEffect(()=>{
         const getCsrfToken = async ()=>{
-            const {data} = await axios.get("/api/csrf-token");
+            const {data} = await apiService.get("/csrf-token");
             axios.defaults.headers["X-CSRF-Token"] = data.getCsrfToken;
 
             console.log("CSRF", data);
@@ -82,4 +82,5 @@ const Provider = ({children})=>{
     )
 }
 
-export {Context, Provider}
+export { Context, Provider };
+

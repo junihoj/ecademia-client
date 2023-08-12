@@ -1,15 +1,14 @@
-import {useContext, useEffect} from 'react'
-import {Context} from '../../context'
-import {SyncOutlined} from '@ant-design/icons'
-import UserRoute from '../../components/routes/UserRoute'
-import axios from 'axios'
+import { SyncOutlined } from '@ant-design/icons'
+import { useContext, useEffect } from 'react'
+import apiService from '../../config/apiService'
+import { Context } from '../../context'
 
 const StripeCallback = ()=>{
     const {state:{user}} = useContext(Context)
 
     useEffect(()=>{
         if(user){
-            axios.post('/api/get-account-status').then(res=>{
+            apiService.post('/get-account-status').then(res=>{
                 window.location.href='/instructor'
                 console.log(res)
             })

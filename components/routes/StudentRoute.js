@@ -3,6 +3,7 @@ import {Context} from '../../context'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import {SyncOutlined} from '@ant-design/icons'
+import apiService from '../../config/apiService'
 
 
 const StudentRoute = ({children, showNav=true})=>{
@@ -17,7 +18,7 @@ const StudentRoute = ({children, showNav=true})=>{
     useEffect(()=>{
         const fetchUser = async ()=>{
             try{
-                const {data} = await axios.get('/api/current-user');
+                const {data} = await apiService.get('/current-user');
                 console.log(data);
                 setOk(true);       
             }catch(err){

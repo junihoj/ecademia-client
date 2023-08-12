@@ -1,13 +1,13 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import InstructorRoute from "../../../../components/routes/InstructorRoute";
-import {toast} from 'react-toastify'
+import { DeleteOutlined } from '@ant-design/icons';
+import { Avatar, List, Modal } from 'antd';
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import Resizer from 'react-image-file-resizer';
+import { toast } from 'react-toastify';
 import CourseCreateForm from "../../../../components/forms/CourseCreateForm";
-import Resizer from 'react-image-file-resizer'
-import {useRouter}from "next/router";
-import {List, Avatar, Modal} from 'antd'
-import {DeleteOutlined} from '@ant-design/icons'
 import UpdateLessonForm from "../../../../components/forms/UpdateLessonForm";
+import InstructorRoute from "../../../../components/routes/InstructorRoute";
+import apiService from "../../../../config/apiService";
 
 const {Item} = List
 const CourseEdit= ()=>{
@@ -20,7 +20,7 @@ const CourseEdit= ()=>{
     },[slug])
 
     const loadCourse = async ()=>{
-        const {data} = await axios.get(`/api/course/${slug}`)
+        const {data} = await apiService.get(`/course/${slug}`)
         if(data){
             setValue(data)
         }
@@ -65,7 +65,7 @@ const CourseEdit= ()=>{
             console.log(uri)
             try {
                 //upload image
-                let {data} = await axios.post('/api/course/upload-image',{
+                let {data} = await apiService.post('/course/upload-image',{
                     image:uri
                 })
                 console.log('IMAGE UPLOADED', data)
@@ -86,7 +86,7 @@ const CourseEdit= ()=>{
         e.preventDefault()
         // console.log(values)
         try{
-            const {data} = await axios.put(`/api/course/${slug}`, {
+            const {data} = await apiService.put(`/course/${slug}`, {
                 ...values, 
                 image,
             })
@@ -116,7 +116,7 @@ const CourseEdit= ()=>{
 
         setValue({...values, lessons:[...allLessons]})
 
-        const {data} = await axios.put(`/api/course/${slug}`, {
+        const {data} = await apiService.put(`/course/${slug}`, {
             ...values, 
             image,
         })
@@ -134,7 +134,7 @@ const CourseEdit= ()=>{
 
         //send request to server
 
-        const {data}= await axios.put(`/api/course/${slug}/${removed[0]._id}`)
+        const {data}= await apiService.put(`/course/${slug}/${removed[0]._id}`)
         console.log('LESSON DELETED =>', data)
     }
 
@@ -145,7 +145,7 @@ const CourseEdit= ()=>{
     const handleVideo= async (e)=>{
         //remove the previous video
         if(current.video && current.video.Location){
-            const res = await axios.post(`/api/course/remove-video/${values.instructor._id}`, current.video)
+            const res = await apiService.post(`/course/remove-video/${values.instructor._id}`, current.video)
             console.log("Video Deleted Response", res)
         }
 
@@ -161,8 +161,8 @@ const CourseEdit= ()=>{
 
         //save progress bar and send video form data to backend
         console.log('VIDEO DATA===>', videoData)
-        const {data} = await axios.post(
-            `/api/course/video-upload/${values.instructor._id}`, 
+        const {data} = await apiService.post(
+            `/course/video-upload/${values.instructor._id}`, 
             videoData, 
             {
                 onUploadProgress: (e)=>setProgress(Math.round(100 * e.loaded)/e.total)
@@ -177,8 +177,8 @@ const CourseEdit= ()=>{
     const handleUpdateLesson = async (e)=>{
         // console.log("handle update lesson")
         e.preventDefault()
-        const {data}  = await axios.put(
-            `/api/course/lesson/${slug}/${current._id}`,
+        const {data}  = await apiService.put(
+            `/course/lesson/${slug}/${current._id}`,
             current
         )
         setUploadVideoButtonText('Upload Video')

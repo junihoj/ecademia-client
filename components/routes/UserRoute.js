@@ -1,8 +1,8 @@
-import {useEffect, useState, useContext} from 'react'
-import {Context} from '../../context'
-import axios from 'axios'
+import { SyncOutlined } from '@ant-design/icons'
 import { useRouter } from 'next/router'
-import {SyncOutlined} from '@ant-design/icons'
+import { useContext, useEffect, useState } from 'react'
+import apiService from '../../config/apiService'
+import { Context } from '../../context'
 import UserNav from '../nav/UserNav'
 
 const UserRoute = ({children, showNav=true})=>{
@@ -17,7 +17,7 @@ const UserRoute = ({children, showNav=true})=>{
     useEffect(()=>{
         const fetchUser = async ()=>{
             try{
-                const {data} = await axios.get('/api/current-user');
+                const {data} = await apiService.get('/current-user');
                 console.log(data);
                 setOk(true);       
             }catch(err){

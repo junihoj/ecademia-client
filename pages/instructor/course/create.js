@@ -1,10 +1,10 @@
-import axios from "axios";
+import { useRouter } from "next/router";
 import { useState } from "react";
-import InstructorRoute from "../../../components/routes/InstructorRoute";
-import {toast} from 'react-toastify'
+import Resizer from 'react-image-file-resizer';
+import { toast } from 'react-toastify';
 import CourseCreateForm from "../../../components/forms/CourseCreateForm";
-import Resizer from 'react-image-file-resizer'
-import {useRouter}from "next/router";
+import InstructorRoute from "../../../components/routes/InstructorRoute";
+import apiService from "../../../config/apiService";
 const CourseCreate= ()=>{
 
     const router = useRouter()
@@ -38,7 +38,7 @@ const CourseCreate= ()=>{
             console.log(uri)
             try {
                 //upload image
-                let {data} = await axios.post('/api/course/upload-image',{
+                let {data} = await apiService.post('/course/upload-image',{
                     image:uri
                 })
                 console.log('IMAGE UPLOADED', data)
@@ -58,7 +58,7 @@ const CourseCreate= ()=>{
     const handleImageRemove = async (e)=>{
         console.log('REMOVE IMAGE')
         try{
-            const res = await axios.post('/api/course/remove-image', {image})
+            const res = await apiService.post('/course/remove-image', {image})
 
             setImage({})
             setPreview("")
@@ -75,7 +75,7 @@ const CourseCreate= ()=>{
         e.preventDefault()
         // console.log(values)
         try{
-            const {data} = await axios.post('/api/course', {
+            const {data} = await apiService.post('/course', {
                 ...values, 
                 image,
             })

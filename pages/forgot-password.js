@@ -1,10 +1,9 @@
-import { useContext, useEffect, useState } from "react";
 import { SyncOutlined } from "@ant-design/icons";
-import axios from "axios";
-import Link from "next/link";
-import { Context } from "../context";
-import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import apiService from "../config/apiService";
+import { Context } from "../context";
 
 const ForgotPassword = ()=>{
     //state
@@ -28,7 +27,7 @@ const ForgotPassword = ()=>{
         e.preventDefault()
         try{
             setLoading(true)
-            const {data} = await axios.post('/api/forgot-password', {email})
+            const {data} = await apiService.post('/forgot-password', {email})
             setSuccess(true)
             toast('Check your email from the secret code');
             setLoading(false)
@@ -43,7 +42,7 @@ const ForgotPassword = ()=>{
         console.log(email, code, newPassword)
         try{
             setLoading(true)
-            const {data} = await axios.post('/api/reset-password', {email, code, newPassword})
+            const {data} = await apiService.post('/reset-password', {email, code, newPassword})
             setEmail('')
             setNewPassword('')
             setLoading(false)

@@ -1,25 +1,26 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import InstructorRoute from "../../../../components/routes/InstructorRoute";
-import axios from 'axios'
-import {Avatar, 
-    Tooltip, 
-    Button, 
-    Modal,
-    List
-} from "antd";
 import {
-    EditOutlined, 
-    CheckOutlined, 
-    UploadOutlined, 
+    CheckOutlined,
+    CloseOutlined,
+    EditOutlined,
     QuestionCircleOutlined,
-    CloseOutlined
-} from '@ant-design/icons'
+    UploadOutlined
+} from '@ant-design/icons';
+import {
+    Avatar,
+    Button,
+    List,
+    Modal,
+    Tooltip
+} from "antd";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import InstructorRoute from "../../../../components/routes/InstructorRoute";
 
-import ReactMarkdown from 'react-markdown'
-import AddLessonForm from "../../../../components/forms/AddLessonForm";
-import { toast } from "react-toastify";
 import Item from "antd/lib/list/Item";
+import ReactMarkdown from 'react-markdown';
+import { toast } from "react-toastify";
+import AddLessonForm from "../../../../components/forms/AddLessonForm";
+import apiService from "../../../../config/apiService";
 
 
 const CourseView = ()=>{
@@ -44,7 +45,7 @@ const CourseView = ()=>{
     },[slug])
 
     const loadCourse = async ()=>{
-        const {data}  = await axios.get(`/api/course/${slug}`)
+        const {data}  = await apiService.get(`/course/${slug}`)
         setCourse(data)   
     }
 
@@ -53,8 +54,8 @@ const CourseView = ()=>{
         e.preventDefault()
         try{
             console.log(values)
-            const {data} = await axios.post(
-                `/api/course/lesson/${slug}/${course.instructor._id}`,
+            const {data} = await apiService.post(
+                `/course/lesson/${slug}/${course.instructor._id}`,
                  values
             )
             setValues({...values, title:'', content:'', video:{}})
@@ -82,7 +83,7 @@ const CourseView = ()=>{
             videoData.append('video', file)
 
             //save progress bar and send video as form data to backend
-            const {data} = await axios.post(`/api/course/video-upload/${course.instructor._id}`, videoData, {
+            const {data} = await apiService.post(`/course/video-upload/${course.instructor._id}`, videoData, {
                 onUploadProgress:(e)=>{
                     setProgress(Math.round((100 * e.loaded) / e.total))
                 }
@@ -104,7 +105,7 @@ const CourseView = ()=>{
 
         try{
             setUploading(true)
-            const {data} = await axios.post(`/api/course/remove-video/${course.instructor._id}`, values.video)
+            const {data} = await apiService.post(`/course/remove-video/${course.instructor._id}`, values.video)
             console.log({data})
             setValues({...values, video:{}})
             setUploading(false)
@@ -122,7 +123,7 @@ const CourseView = ()=>{
             )
             if(!answer) return
 
-            const {data} = await axios.put(`/api/course/unpublish/${courseId}`)
+            const {data} = await apiService.put(`/course/unpublish/${courseId}`)
             setCourse(data)
             toast("Your course is Unpublished")
         }catch(err){
@@ -137,7 +138,7 @@ const CourseView = ()=>{
                 'Once you publish your course it will be life in the market place for user to enroll'
             )
             if(!answer) return
-            const {data} = await axios.put(`/api/course/publish/${courseId}`)
+            const {data} = await apiService.put(`/course/publish/${courseId}`)
             setCourse(data)
 
             toast("Congrats! Your course is now live")

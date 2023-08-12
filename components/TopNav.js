@@ -1,17 +1,19 @@
-import {Menu} from 'antd'
-import Link from 'next/link'
 import {
-    AppstoreOutlined, 
-    CoffeeOutlined, LoginOutlined, 
-    LogoutOutlined, UserAddOutlined, AccountBookFilled,
+    AccountBookFilled,
+    AppstoreOutlined,
     CarryOutOutlined,
+    CoffeeOutlined, LoginOutlined,
+    LogoutOutlined,
     TeamOutlined,
+    UserAddOutlined,
 } from '@ant-design/icons'
-import { useState, useEffect, useContext } from 'react'
-import {Context} from '../context/index'
-import axios from 'axios'
-import {toast} from 'react-toastify'
+import { Menu } from 'antd'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useContext, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import apiService from '../config/apiService'
+import { Context } from '../context/index'
 
 
 
@@ -32,7 +34,7 @@ const TopNav = ()=>{
             type:"LOGOUT"
         });
         window.localStorage.removeItem('user');
-        const {data} = await axios.get("/api/logout");
+        const {data} = await apiService.get("/logout");
         toast(data.message);
         router.push('/login')
     }

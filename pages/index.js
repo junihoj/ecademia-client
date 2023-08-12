@@ -1,4 +1,3 @@
-import {useState, useEffect} from 'react'
 import axios from 'axios'
 import CourseCard from '../components/cards/CourseCard'
 
@@ -7,7 +6,7 @@ const Index = ({courses})=>{
 
     // useEffect(()=>{
     //     const fetchCourses = async ()=>{
-    //         const {data} = await axios.get('/api/courses')
+    //         const {data} = await apiService('/courses')
     //         setCourses(data)
     //     }
     //     fetchCourses()
