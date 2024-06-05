@@ -13,12 +13,11 @@ const handle = app.getRequestHandler();
 app.prepare().then(()=>{
     //setup proxy in dev mode
     const server = express();
-    if(dev){
-        server.use('/api', createProxyMiddleware({
-            target:process.env.API,
-            changeOrigin:true,
-        }))
-    }
+   
+    server.use('/api', createProxyMiddleware({
+        target:process.env.API,
+        changeOrigin:true,
+    }))
 
 
     server.all('*', (req,res)=>{
