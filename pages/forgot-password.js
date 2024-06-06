@@ -28,7 +28,7 @@ const ForgotPassword = ()=>{
         e.preventDefault()
         try{
             setLoading(true)
-            const {data} = await axios.post('/api/forgot-password', {email})
+            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API}/forgot-password`, {email})
             setSuccess(true)
             toast('Check your email from the secret code');
             setLoading(false)
@@ -43,7 +43,7 @@ const ForgotPassword = ()=>{
         console.log(email, code, newPassword)
         try{
             setLoading(true)
-            const {data} = await axios.post('/api/reset-password', {email, code, newPassword})
+            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API}/reset-password`, {email, code, newPassword})
             setEmail('')
             setNewPassword('')
             setLoading(false)

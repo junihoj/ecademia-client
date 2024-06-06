@@ -17,7 +17,7 @@ const InstructorRoute = ({children})=>{
     useEffect(()=>{
         const fetchInstructor = async ()=>{
             try{
-                const {data} = await axios.get('/api/current-instructor');
+                const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API}/current-instructor`);
                 console.log(data);
                 setOk(true);   
                     
