@@ -55,7 +55,7 @@ const SingleCourse = ({course})=>{
     },[user, course])
 
     const checkEnrollment = async ()=>{
-        const {data} = await axios.get(`/api/check-enrollment/${course._id}`)
+        const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API}/check-enrollment/${course._id}`)
         console.log("CHECK ENROLLMENT", data)
         setEnrolled(data)
     }
@@ -70,7 +70,7 @@ const SingleCourse = ({course})=>{
     //         // check for user enrollment
     //         if(enrolled.status) return router.push(`/user/course/${enrolled.course.slug}`)
     //         setLoading(true)
-    //         const {data} = await axios.post(`/api/paid-enrollment/${course._id}`)
+    //         const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API}/paid-enrollment/${course._id}`)
     //         const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY)
     //         stripe.redirectToCheckout({sessionId: data})
     //     }catch(err){
@@ -87,7 +87,7 @@ const SingleCourse = ({course})=>{
             2. if a free course then return else flutterwave standard payment
         */
         console.log("paid enrollement");
-        const {data} = await axios.get(`/api/check-paid/${course._id}`);
+        const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API}/check-paid/${course._id}`);
         console.log("PAID",data)
         window.location.href=data;
         
@@ -117,7 +117,7 @@ const SingleCourse = ({course})=>{
             // check for user enrollment
             if(enrolled.status) return router.push(`/user/course/${enrolled.course.slug}`)
             setLoading(true)
-            const {data}= await axios.post(`/api/free-enrollment/${course._id}`)
+            const {data}= await axios.post(`${process.env.NEXT_PUBLIC_API}/free-enrollment/${course._id}`)
             toast(data.message)
             setLoading(false)
             router.push(data.course.slug)

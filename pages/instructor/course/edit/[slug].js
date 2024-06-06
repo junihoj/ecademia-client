@@ -20,7 +20,7 @@ const CourseEdit= ()=>{
     },[slug])
 
     const loadCourse = async ()=>{
-        const {data} = await axios.get(`/api/course/${slug}`)
+        const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API}/course/${slug}`)
         if(data){
             setValue(data)
         }
@@ -65,7 +65,7 @@ const CourseEdit= ()=>{
             console.log(uri)
             try {
                 //upload image
-                let {data} = await axios.post('/api/course/upload-image',{
+                let {data} = await axios.post(`${process.env.NEXT_PUBLIC_API}/course/upload-image`,{
                     image:uri
                 })
                 console.log('IMAGE UPLOADED', data)
@@ -86,7 +86,7 @@ const CourseEdit= ()=>{
         e.preventDefault()
         // console.log(values)
         try{
-            const {data} = await axios.put(`/api/course/${slug}`, {
+            const {data} = await axios.put(`${process.env.NEXT_PUBLIC_API}/course/${slug}`, {
                 ...values, 
                 image,
             })
@@ -116,7 +116,7 @@ const CourseEdit= ()=>{
 
         setValue({...values, lessons:[...allLessons]})
 
-        const {data} = await axios.put(`/api/course/${slug}`, {
+        const {data} = await axios.put(`${process.env.NEXT_PUBLIC_API}/course/${slug}`, {
             ...values, 
             image,
         })
@@ -134,7 +134,7 @@ const CourseEdit= ()=>{
 
         //send request to server
 
-        const {data}= await axios.put(`/api/course/${slug}/${removed[0]._id}`)
+        const {data}= await axios.put(`${process.env.NEXT_PUBLIC_API}/course/${slug}/${removed[0]._id}`)
         console.log('LESSON DELETED =>', data)
     }
 
@@ -145,7 +145,7 @@ const CourseEdit= ()=>{
     const handleVideo= async (e)=>{
         //remove the previous video
         if(current.video && current.video.Location){
-            const res = await axios.post(`/api/course/remove-video/${values.instructor._id}`, current.video)
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API}/course/remove-video/${values.instructor._id}`, current.video)
             console.log("Video Deleted Response", res)
         }
 
@@ -162,7 +162,7 @@ const CourseEdit= ()=>{
         //save progress bar and send video form data to backend
         console.log('VIDEO DATA===>', videoData)
         const {data} = await axios.post(
-            `/api/course/video-upload/${values.instructor._id}`, 
+            `${process.env.NEXT_PUBLIC_API}/course/video-upload/${values.instructor._id}`, 
             videoData, 
             {
                 onUploadProgress: (e)=>setProgress(Math.round(100 * e.loaded)/e.total)
@@ -178,7 +178,7 @@ const CourseEdit= ()=>{
         // console.log("handle update lesson")
         e.preventDefault()
         const {data}  = await axios.put(
-            `/api/course/lesson/${slug}/${current._id}`,
+            `${process.env.NEXT_PUBLIC_API}/course/lesson/${slug}/${current._id}`,
             current
         )
         setUploadVideoButtonText('Upload Video')

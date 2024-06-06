@@ -31,7 +31,7 @@ const Register = ()=>{
             console.table({name, email, password})
             // ${process.env.NEXT_PUBLIC_API}
             const {data} = await axios.post(
-                `/api/register`,
+                `${process.env.NEXT_PUBLIC_API}/register`,
                 {name:name, email:email,password:password}
             );
             console.log("Register response", data);

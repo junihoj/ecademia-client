@@ -32,7 +32,7 @@ const Login = () => {
             console.table({ email, password })
             // ${process.env.NEXT_PUBLIC_API}
             const { data } = await axios.post(
-                `/api/login`,
+                `${process.env.NEXT_PUBLIC_API}/login`,
                 { email: email, password: password }
             );
             console.log("Login  response", data);

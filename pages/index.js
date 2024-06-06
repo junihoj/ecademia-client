@@ -7,7 +7,7 @@ const Index = ({courses})=>{
 
     // useEffect(()=>{
     //     const fetchCourses = async ()=>{
-    //         const {data} = await axios.get('/api/courses')
+    //         const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API}/courses`)
     //         setCourses(data)
     //     }
     //     fetchCourses()
@@ -35,7 +35,7 @@ const Index = ({courses})=>{
 export async function getServerSideProps(){
     // console.log("THIS SHOULD RETURN UNDEFINE",process.env.API)
     // console.log("WILL PUBLIC RUN", `${process.env.NEXT_PUBLIC_API}`)
-    const {data}  = await axios.get(`${process.env.API}/api/courses`)
+    const {data}  = await axios.get(`${process.env.API}${process.env.NEXT_PUBLIC_API}/courses`)
 
     return {
         props:{

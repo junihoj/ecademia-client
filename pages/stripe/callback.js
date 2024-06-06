@@ -9,7 +9,7 @@ const StripeCallback = ()=>{
 
     useEffect(()=>{
         if(user){
-            axios.post('/api/get-account-status').then(res=>{
+            axios.post(`${process.env.NEXT_PUBLIC_API}/get-account-status`).then(res=>{
                 window.location.href='/instructor'
                 console.log(res)
             })

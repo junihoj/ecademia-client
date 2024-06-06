@@ -38,7 +38,7 @@ const CourseCreate= ()=>{
             console.log(uri)
             try {
                 //upload image
-                let {data} = await axios.post('/api/course/upload-image',{
+                let {data} = await axios.post(`${process.env.NEXT_PUBLIC_API}/course/upload-image`,{
                     image:uri
                 })
                 console.log('IMAGE UPLOADED', data)
@@ -58,7 +58,7 @@ const CourseCreate= ()=>{
     const handleImageRemove = async (e)=>{
         console.log('REMOVE IMAGE')
         try{
-            const res = await axios.post('/api/course/remove-image', {image})
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API}/course/remove-image`, {image})
 
             setImage({})
             setPreview("")
@@ -75,7 +75,7 @@ const CourseCreate= ()=>{
         e.preventDefault()
         // console.log(values)
         try{
-            const {data} = await axios.post('/api/course', {
+            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API}/course`, {
                 ...values, 
                 image,
             })

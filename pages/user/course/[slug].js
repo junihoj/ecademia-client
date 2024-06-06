@@ -37,7 +37,7 @@ const SingleCourse = ()=>{
 
     const loadCourse = async ()=>{
         try {
-            const {data} = await axios.get(`/api/user/course/${slug}`);
+            const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API}/user/course/${slug}`);
             setCourse(data)
         } catch (error) {
             console.log(error)
@@ -46,7 +46,7 @@ const SingleCourse = ()=>{
     }
 
     const loadCompletedLessons =async ()=>{
-        const {data} = await axios.post(`/api/list-completed`, {
+        const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API}/list-completed`, {
             courseId: course._id
         })
         console.log('COMPLETED LESSONS', data)
@@ -55,7 +55,7 @@ const SingleCourse = ()=>{
     }
 
     const markCompleted = async ()=>{
-        const {data} = await axios.post(`/api/mark-completed`, {
+        const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API}/mark-completed`, {
             courseId:course._id,
             lessonId:course.lessons[clicked]._id,
         })
@@ -64,7 +64,7 @@ const SingleCourse = ()=>{
 
     const markIncompleted = async ()=>{
         try{
-            const {data} = await axios.post(`/api/mark-incomplete`, {
+            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API}/mark-incomplete`, {
                 courseId:course._id,
                 lessonId:course.lessons[clicked]._id,
             })

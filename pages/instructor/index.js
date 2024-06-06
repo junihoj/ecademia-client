@@ -14,7 +14,7 @@ const CourseCreate= ()=>{
     }, [])
 
     const loadCourses = async ()=>{
-            const {data}  = await axios.get('/api/instructor-courses')
+            const {data}  = await axios.get(`${process.env.NEXT_PUBLIC_API}/instructor-courses`)
             setCourses(data)
     }
 

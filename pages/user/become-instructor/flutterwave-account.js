@@ -48,7 +48,7 @@ const BecomeInstructorFlutterwave= ()=>{
         
         console.log("become an instructor")
         setLoading(true)
-        axios.post('/api/make-instructor/flutterwave', data)
+        axios.post(`${process.env.NEXT_PUBLIC_API}/make-instructor/flutterwave`, data)
         .then(res=>{
           console.log(res.data)
         //  window.location.href= res.data;
@@ -73,7 +73,7 @@ const BecomeInstructorFlutterwave= ()=>{
         if(acceptedCountry.includes(ISO_CODE)){
             console.log('accepted')
             //send axios to backend for available branch in the country
-            axios.post('/api/get-banks', {ISO_CODE}).then((res)=>{
+            axios.post(`${process.env.NEXT_PUBLIC_API}/get-banks`, {ISO_CODE}).then((res)=>{
                 setBanks(res.data.Banks.data)
             }).catch((err)=>{
                 console.log(err)

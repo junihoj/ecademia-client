@@ -14,7 +14,7 @@ const BecomeInstructorStripe= ()=>{
     const becomeInstructor = ()=>{
         console.log("become an instructor")
         setLoading(true)
-        axios.post('/api/make-instructor')
+        axios.post(`${process.env.NEXT_PUBLIC_API}/make-instructor`)
         .then(res=>{
           Window.location.href  = res.data;
         })
